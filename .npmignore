@@ -1,0 +1,19 @@
+.cache
+.vscode
+.vs
+build
+deps
+# dist
+node_modules
+scripts
+src
+# tests
+.gitignore
+.gitmodules
+CMakeLists.txt
+# index.ts
+# jieba.d.ts
+# jieba.js
+package-lock.json
+# tsconfig.json
+webpack.config.js
