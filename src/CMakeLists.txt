@@ -15,7 +15,7 @@ if(EMSCRIPTEN)
   target_link_libraries(jieba_js "-s NO_FILESYSTEM=0")
   target_link_libraries(jieba_js "-s NODERAWFS=0")
   target_link_libraries(jieba_js "-s EXPORT_NAME=Jieba")
-  target_link_libraries(jieba_js "-s TOTAL_MEMORY=67108864")
+  target_link_libraries(jieba_js "-s TOTAL_MEMORY=33554432")
   # target_link_libraries(jieba_js "-s EXPORT_ES6=0")
   target_link_libraries(
     jieba_js "--extern-pre-js ${CMAKE_CURRENT_SOURCE_DIR}/js-extern-pre.js")

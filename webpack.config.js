@@ -4,7 +4,6 @@ const { version, author, description, name } = require("./package.json");
 
 module.exports = {
   mode: "development",
-  devtool: "source-map",
   target: "node",
   entry: path.resolve(__dirname, "index.ts"),
   output: {
