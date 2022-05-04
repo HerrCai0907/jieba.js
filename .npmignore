@@ -8,6 +8,7 @@ node_modules
 scripts
 src
 # tests
+.gitattributes
 .gitignore
 .gitmodules
 CMakeLists.txt

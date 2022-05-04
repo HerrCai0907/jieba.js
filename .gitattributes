@@ -1,0 +1,4 @@
+*.cpp linguist-language=javascript
+*.h linguist-language=javascript
+*.js linguist-language=javascript
+*.ts linguist-language=javascript
