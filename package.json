@@ -1,5 +1,5 @@
 {
-  "name": "jieba.js",
+  "name": "@congcongcai/jieba.js",
   "version": "0.0.1",
   "description": "cppjieba for javascript by wasm",
   "main": "dist/index.js",
