@@ -52,7 +52,9 @@ export function init(
   destructorString(stop_word_path_ptr);
 }
 
-export function extract(str: string, topN: number): { word: string; weight: number }[] {
+export type ExtractResult = { word: string; weight: number };
+
+export function extract(str: string, topN: number): ExtractResult[] {
   if (moduleRef == 0) throw Error("jieba module not init or init failed");
   const strRef = constructorString(str);
 
