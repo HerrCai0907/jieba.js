@@ -1,6 +1,7 @@
 type Ref = number;
-type stringRef = number;
-type moduleRef = number;
+type StringRef = number;
+type DoubleRef = number;
+type ModuleRef = number;
 
 type CppWasmType = {
   asm: any;
@@ -9,17 +10,29 @@ type CppWasmType = {
 
   UTF8ToString: (ptr: Ref, maxSize: number) => string;
   StringToUTF8: (str: string, ptr: Ref, maxSize: number) => void;
+
+  HEAPF64: Float64Array
 };
 
 export type JiebaType = {
-  _Init: (
-    dict_path: stringRef,
-    hmm_path: stringRef,
-    user_dict_path: stringRef,
-    idf_path: stringRef,
-    stop_word_path: stringRef
-  ) => moduleRef;
-  _Cut: (module: moduleRef, str: stringRef, result: stringRef, length: number) => number;
+  _init: (
+    dict_path: StringRef,
+    hmm_path: StringRef,
+    user_dict_path: StringRef,
+    idf_path: StringRef,
+    stop_word_path: StringRef
+  ) => ModuleRef;
+
+  _cut: (module: ModuleRef, str: StringRef, results: StringRef, maxLength: number) => number;
+
+  _extract: (
+    module: ModuleRef,
+    str: StringRef,
+    top: number,
+    results: StringRef,
+    maxLength: number,
+    weights: DoubleRef
+  ) => number;
 } & CppWasmType;
 
 export let Jieba: JiebaType;

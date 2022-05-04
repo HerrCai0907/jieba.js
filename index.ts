@@ -1,3 +1,4 @@
+import assert from "assert";
 import { Jieba } from "./jieba";
 
 let moduleRef: number = 0;
@@ -31,19 +32,19 @@ export function ready() {
 }
 
 export function init(
-  dict_path?: string | null,
-  hmm_path?: string | null,
-  user_dict_path?: string | null,
-  idf_path?: string | null,
-  stop_word_path?: string | null
+  dictPath?: string | null,
+  hmmPath?: string | null,
+  userDictPath?: string | null,
+  idfPath?: string | null,
+  stopWordPath?: string | null
 ) {
   if (Jieba.asm == undefined) throw Error("jieba wasm not load, please call 'ready' first");
-  const dict_path_ptr = dict_path == null ? 0 : constructorString(dict_path);
-  const hmm_path_ptr = hmm_path == null ? 0 : constructorString(hmm_path);
-  const user_dict_path_ptr = user_dict_path == null ? 0 : constructorString(user_dict_path);
-  const idf_path_ptr = idf_path == null ? 0 : constructorString(idf_path);
-  const stop_word_path_ptr = stop_word_path == null ? 0 : constructorString(stop_word_path);
-  moduleRef = Jieba._Init(dict_path_ptr, hmm_path_ptr, user_dict_path_ptr, idf_path_ptr, stop_word_path_ptr);
+  const dict_path_ptr = dictPath == null ? 0 : constructorString(dictPath);
+  const hmm_path_ptr = hmmPath == null ? 0 : constructorString(hmmPath);
+  const user_dict_path_ptr = userDictPath == null ? 0 : constructorString(userDictPath);
+  const idf_path_ptr = idfPath == null ? 0 : constructorString(idfPath);
+  const stop_word_path_ptr = stopWordPath == null ? 0 : constructorString(stopWordPath);
+  moduleRef = Jieba._init(dict_path_ptr, hmm_path_ptr, user_dict_path_ptr, idf_path_ptr, stop_word_path_ptr);
   destructorString(dict_path_ptr);
   destructorString(hmm_path_ptr);
   destructorString(user_dict_path_ptr);
@@ -51,20 +52,51 @@ export function init(
   destructorString(stop_word_path_ptr);
 }
 
+export function extract(str: string, topN: number): { word: string; weight: number }[] {
+  if (moduleRef == 0) throw Error("jieba module not init or init failed");
+  const strRef = constructorString(str);
+
+  let resultAssumeSize = topN * 40;
+  let resultRef = Jieba._malloc(resultAssumeSize); // worst case each string have a sep
+
+  let weightsRef = Jieba._malloc(topN * 8); // each double 8 bytes
+
+  while (Jieba._extract(moduleRef, strRef, topN, resultRef, resultAssumeSize, weightsRef) == -1) {
+    Jieba._free(resultRef);
+    resultAssumeSize *= 2;
+    resultRef = Jieba._malloc(resultAssumeSize);
+  }
+
+  const words = Jieba.UTF8ToString(resultRef, resultAssumeSize).split("/");
+
+  const res = words.map((word, index) => {
+    const weight = Jieba.HEAPF64.at((weightsRef >> 3) + index);
+    assert(weight);
+    return { word, weight };
+  });
+
+  Jieba._free(weightsRef);
+  Jieba._free(resultRef);
+  destructorString(strRef);
+
+  return res;
+}
+
 export function cut(str: string): string[] {
   if (moduleRef == 0) throw Error("jieba module not init or init failed");
-  const str_ptr = constructorString(str);
+  const strRef = constructorString(str);
 
-  let result_assume_size = getStringLength(str) * 2;
-  let result_ptr = Jieba._malloc(result_assume_size); // worst case each string have a sep
-  while (Jieba._Cut(moduleRef, str_ptr, result_ptr, result_assume_size) == -1) {
-    Jieba._free(result_ptr);
-    result_assume_size *= 2;
-    result_ptr = Jieba._malloc(result_assume_size);
+  let resultAssumeSize = getStringLength(str) * 2;
+  let resultRef = Jieba._malloc(resultAssumeSize); // worst case each string have a sep
+  while (Jieba._cut(moduleRef, strRef, resultRef, resultAssumeSize) == -1) {
+    Jieba._free(resultRef);
+    resultAssumeSize *= 2;
+    resultRef = Jieba._malloc(resultAssumeSize);
   }
-  const result = Jieba.UTF8ToString(result_ptr, result_assume_size);
-  Jieba._free(result_ptr);
-  destructorString(str_ptr);
+  const result = Jieba.UTF8ToString(resultRef, resultAssumeSize).split("/");
 
-  return result.split("/\\/\\");
+  Jieba._free(resultRef);
+  destructorString(strRef);
+
+  return result;
 }

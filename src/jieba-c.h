@@ -14,11 +14,11 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
-BINARYEN_API cppjieba::Jieba *Init(const char *DICT_PATH, const char *HMM_PATH, const char *USER_DICT_PATH,
+BINARYEN_API cppjieba::Jieba *init(const char *DICT_PATH, const char *HMM_PATH, const char *USER_DICT_PATH,
                                    const char *IDF_PATH, const char *STOP_WORD_PATH);
-BINARYEN_API uint32_t Cut(cppjieba::Jieba *module, const char *str, char *result, uint32_t length);
-BINARYEN_API int Test();
-
+BINARYEN_API uint32_t cut(cppjieba::Jieba *module, const char *str, uint8_t *result, uint32_t length);
+BINARYEN_API uint32_t extract(cppjieba::Jieba *module, const char *str, uint32_t top, uint8_t *results,
+                              uint32_t maxLength, double *weights);
 #ifdef __cplusplus
 }
 #endif
