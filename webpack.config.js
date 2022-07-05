@@ -5,10 +5,12 @@ const { version, author, description, name } = require("./package.json");
 module.exports = {
   mode: "development",
   target: "node",
-  entry: path.resolve(__dirname, "index.ts"),
+  devtool: "source-map",
+  entry: path.resolve(__dirname, "index.js"),
   output: {
     filename: "index.js",
     path: path.resolve(__dirname, "dist"),
+    library: "jieba",
     libraryTarget: "umd",
     clean: true,
   },
@@ -19,26 +21,13 @@ module.exports = {
     usedExports: true,
   },
   module: {
-    rules: [
-      {
-        test: /\.tsx?$/,
-        exclude: /node_modules/,
-        loader: "ts-loader",
-      },
-    ],
+    rules: [],
   },
   externals: {},
   plugins: [
     new BannerPlugin({
       entryOnly: false,
-      banner:
-        `${name} v${version}` +
-        "\n" +
-        `${description}` +
-        "\n" +
-        `Author: ${author.join(" ")}` +
-        "\n" +
-        `Date: ${new Date()}`,
+      banner: `${name} v${version}` + "\n" + `${description}` + "\n" + `Author: ${author}` + "\n" + `Date: ${new Date()}`,
     }),
   ],
 };

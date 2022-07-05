@@ -1,6 +1,8 @@
+.cache
 .vscode
 .vs
 build
 dist
 node_modules
+index.js
 package-lock.json

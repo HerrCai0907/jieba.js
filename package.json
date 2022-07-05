@@ -3,16 +3,18 @@
   "version": "0.0.1",
   "description": "cppjieba for javascript by wasm",
   "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "types": "index.d.ts",
   "scripts": {
     "prepublishOnly": "npm run release",
-    "build:cpp": "node scripts/buildcpp.js",
+    "build:cpp:debug": "node scripts/buildcpp.js",
+    "build:cpp:release": "node scripts/buildcpp.js release",
     "webpack": "webpack",
     "webpack:watch": "webpack --watch",
     "webpack:release": "webpack --mode production",
-    "build": "npm run build:cpp && npm run webpack",
-    "release": "npm run build:cpp && npm run webpack:release",
-    "demo": "node tests/index.js"
+    "build": "npm run build:cpp:debug && npm run webpack",
+    "release": "npm run build:cpp:release && npm run webpack:release",
+    "demo:node": "node examples/index.js",
+    "demo:web": "npx serve ."
   },
   "repository": {
     "type": "git",
