@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "description": "cppjieba for javascript by wasm",
   "main": "dist/index.js",
-  "type": "dist/index.d.ts",
+  "types": "dist/index.d.ts",
   "scripts": {
     "prepublishOnly": "npm run release",
     "build:cpp": "node scripts/buildcpp.js",
@@ -21,9 +21,7 @@
   "keywords": [
     "jieba"
   ],
-  "author": [
-    "Congcong Cai <congcongcai0907@163.com>"
-  ],
+  "author": "Congcong Cai <congcongcai0907@163.com>",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/HerrCai0907/jieba.js/issues"
