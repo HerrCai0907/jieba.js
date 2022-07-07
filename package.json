@@ -1,10 +1,12 @@
 {
   "name": "@congcongcai/jieba.js",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "cppjieba for javascript by wasm",
   "main": "dist/index.js",
   "types": "index.d.ts",
   "scripts": {
+    "preversion": "npm run release",
+    "version": "conventional-changelog -i CHANGELOG.md -s --preset angular && git add CHANGELOG.md",
     "prepublishOnly": "npm run release",
     "build:cpp": "node scripts/buildcpp.js",
     "webpack": "webpack",
@@ -35,6 +37,7 @@
   "devDependencies": {
     "@types/fs-extra": "^9.0.13",
     "@types/node": "^17.0.31",
+    "conventional-changelog-cli": "^2.2.2",
     "fs-extra": "^10.1.0",
     "ts-loader": "^9.3.0",
     "ts-node": "^10.7.0",
