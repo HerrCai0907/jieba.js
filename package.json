@@ -1,6 +1,6 @@
 {
   "name": "@congcongcai/jieba.js",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "cppjieba for javascript by wasm",
   "main": "dist/index.js",
   "types": "index.d.ts",
