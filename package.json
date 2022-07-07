@@ -6,13 +6,12 @@
   "types": "index.d.ts",
   "scripts": {
     "prepublishOnly": "npm run release",
-    "build:cpp:debug": "node scripts/buildcpp.js",
-    "build:cpp:release": "node scripts/buildcpp.js release",
+    "build:cpp": "node scripts/buildcpp.js",
     "webpack": "webpack",
     "webpack:watch": "webpack --watch",
     "webpack:release": "webpack --mode production",
-    "build": "npm run build:cpp:debug && npm run webpack",
-    "release": "npm run build:cpp:release && npm run webpack:release",
+    "build": "npm run build:cpp && npm run webpack",
+    "release": "npm run build:cpp && npm run webpack:release",
     "demo:node": "node examples/index.js",
     "demo:web": "npx serve ."
   },

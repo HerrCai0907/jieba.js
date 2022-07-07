@@ -29,7 +29,7 @@ if(EMSCRIPTEN)
     jieba
     "--embed-file ${CMAKE_CURRENT_SOURCE_DIR}/../deps/cppjieba/dict/user.dict.utf8@assert/user.dict.utf8"
   )
-  target_link_libraries(jieba optimized "--closure 2")
+  target_link_libraries(jieba optimized "--closure 1")
   target_link_libraries(jieba optimized "--closure-args
   \"--language_in=ECMASCRIPT6 --language_out=ECMASCRIPT6\"")
   target_link_libraries(jieba optimized "-flto")

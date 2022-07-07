@@ -14,13 +14,6 @@ const execConfig = {
   cwd: buildFolder,
 };
 
-let build_type;
-if (process.argv[2] == "release") {
-  build_type = "-DCMAKE_BUILD_TYPE=Release";
-} else {
-  build_type = "-DCMAKE_BUILD_TYPE=Debug";
-}
-
-execSync(`emcmake cmake .. ${build_type}`, execConfig);
+execSync(`emcmake cmake .. -DCMAKE_BUILD_TYPE=Debug`, execConfig);
 execSync(`emmake make -j ${cpus().length}`, execConfig);
 copyFileSync(join(buildFolder, "bin/jieba.js"), "index.js");
