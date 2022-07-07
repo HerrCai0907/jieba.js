@@ -4,13 +4,14 @@
 build
 deps
 # dist
+# example
 node_modules
 scripts
 src
-# tests
 .gitattributes
 .gitignore
 .gitmodules
+.prettierrc
 CMakeLists.txt
 # index.ts
 # jieba.d.ts

@@ -29,7 +29,6 @@ if(EMSCRIPTEN)
   add_compile_flag("-s DISABLE_EXCEPTION_CATCHING=0")
   add_link_flag("-s DISABLE_EXCEPTION_CATCHING=0")
   # make the tools immediately usable on Node.js
-  add_link_flag("-s NODERAWFS")
   # in opt builds, LTO helps so much (>20%) it's worth slow compile times
 else()
   message(FATAL_ERROR "please use emcmake cmake ..")
